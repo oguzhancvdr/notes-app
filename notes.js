@@ -58,4 +58,20 @@ const removeNote = (title) => {
   }
 };
 
-export { getNote, addNote, removeNote, listNotes };
+const updateNote = (title, updatedBody) => {
+  const findNote = _notes.slice().find(note => note?.title === title)
+  if(findNote?.title && findNote?.body){ // check wheter we have the note or not
+    for (let i = 0; i < _notes.length; i++) {
+      if (_notes[i].title === title) {
+        _notes[i].body = updatedBody;
+        break; // Once updated, exit the loop
+      }
+    }
+    saveNotes(_notes)
+    log(chalk.bgCyan.bold('Note updated successfully'));
+  } else {
+    throw new Error('Note not found with the specified title.')
+  }
+}
+
+export { getNote, addNote, removeNote, listNotes, updateNote };
